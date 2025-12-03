@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fasilitas Sekolah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* Asumsi definisi warna untuk kelas kustom Anda */
+        .text-soreang-blue-dark { 
+            color: #1e3a8a; /* Contoh warna biru tua */
+        }
+        
+        /* CSS untuk Modal Zoom Gambar */
+        #zoom-modal {
+            display: none; /* Tersembunyi secara default */
+            position: fixed;
+            z-index: 9999; /* Pastikan di atas semua elemen */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9); /* Latar belakang gelap */
+            padding-top: 60px;
+        }
+        #zoom-content {
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 800px;
+            max-height: 85vh; /* Batasi tinggi agar sesuai layar */
+            object-fit: contain; /* Memastikan gambar pas tanpa terpotong */
+        }
+        #caption {
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+        /* Tombol Tutup Modal */
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .close-btn:hover, .close-btn:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <section id="fasilitas" class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-soreang-blue-dark section-title">Fasilitas Sekolah</h2>
+            <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-6 mt-10">
+                
+                <div class="card bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img class="w-full h-40 object-cover cursor-pointer" src="https://i.imgur.com/D1Of3wk.jpeg" alt="Fasilitas Laboratorium" onclick="zoomImage('https://i.imgur.com/D1Of3wk.jpeg', 'Fasilitas Laboratorium: Dilengkapi peralatan modern untuk praktikum IPA dan Komputer.')"> 
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold text-soreang-blue-dark">Laboratorium</h4>
+                        <p class="text-sm text-gray-600 mt-1">Dilengkapi peralatan modern untuk praktikum IPA dan Komputer.</p>
+                    </div>
+                </div>
+                
+                <div class="card bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img class="w-full h-40 object-cover cursor-pointer" src="https://i.imgur.com/r4nH4Yg.jpeg" alt="Fasilitas Perpustakaan" onclick="zoomImage('https://i.imgur.com/r4nH4Yg.jpeg', 'Fasilitas Perpustakaan: Koleksi buku lengkap dan ruang baca yang nyaman.')">
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold text-soreang-blue-dark">Perpustakaan</h4>
+                        <p class="text-sm text-gray-600 mt-1">Koleksi buku lengkap dan ruang baca yang nyaman.</p>
+                    </div>
+                </div>
+                
+                <div class="card bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img class="w-full h-40 object-cover cursor-pointer" src="https://i.imgur.com/xv0T5lW.jpeg" alt="Fasilitas Ibadah" onclick="zoomImage('https://i.imgur.com/xv0T5lW.jpeg', 'Masjid Sekolah: Pusat kegiatan keagamaan dan pembinaan karakter.')">
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold text-soreang-blue-dark">Masjid Sekolah</h4>
+                        <p class="text-sm text-gray-600 mt-1">Pusat kegiatan keagamaan dan pembinaan karakter.</p>
+                    </div>
+                </div>
+                
+                <div class="card bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img class="w-full h-40 object-cover cursor-pointer" src="https://i.imgur.com/uEqTyBd.jpeg" alt="Fasilitas Aula" onclick="zoomImage('https://i.imgur.com/uEqTyBd.jpeg', 'Aula Serbaguna: Digunakan untuk acara besar dan pertemuan sekolah.')">
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold text-soreang-blue-dark">Aula Serbaguna</h4>
+                        <p class="text-sm text-gray-600 mt-1">Digunakan untuk acara besar dan pertemuan sekolah.</p>
+                    </div>
+                </div>
+                
+                <div class="card bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img class="w-full h-40 object-cover cursor-pointer" src="https://i.imgur.com/Z9wLH2v.jpeg" alt="Ruang Multimedia" onclick="zoomImage('https://i.imgur.com/Z9wLH2v.jpeg', 'Ruang Multimedia: Untuk pembelajaran berbasis teknologi dan kreasi digital.')">
+                    <div class="p-4">
+                        <h4 class="text-xl font-semibold text-soreang-blue-dark">Ruang Multimedia</h4>
+                        <p class="text-sm text-gray-600 mt-1">Untuk pembelajaran berbasis teknologi dan kreasi digital.</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <div id="zoom-modal">
+      <span class="close-btn" onclick="document.getElementById('zoom-modal').style.display='none'">&times;</span>
+      <img id="zoom-content" alt="Gambar Diperbesar">
+      <div id="caption"></div>
+    </div>
+    <script>
+        function zoomImage(src, alt) {
+            const modal = document.getElementById("zoom-modal");
+            const modalImg = document.getElementById("zoom-content");
+            const captionText = document.getElementById("caption");
+            
+            // Tampilkan modal
+            modal.style.display = "block";
+            
+            // Atur sumber gambar dan teks keterangan (caption)
+            modalImg.src = src;
+            captionText.innerHTML = alt;
+        }
+
+        // Tutup modal jika user klik di luar gambar (di latar belakang gelap)
+        const modal = document.getElementById("zoom-modal");
+        modal.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+    </script>
+</body>
+</html>
